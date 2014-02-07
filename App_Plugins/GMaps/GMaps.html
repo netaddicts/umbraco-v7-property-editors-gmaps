@@ -1,4 +1,4 @@
-﻿<div ng-controller="GMaps.GoogleMapsController" class="umb-editor umb-googlemaps">
+﻿<div ng-controller="GMaps.GoogleMapsController" class="umb-editor umb-googlemaps test">
     <div>
         <input type="text" id="{{model.alias}}_lookup" class="umb-editor umb-textstring textstring"/>
     </div>
@@ -7,5 +7,8 @@
     </div>
     <div>
         <span>{{formattedAddress}}</span>
+    </div>
+    <div>
+    	<button type="submit" id="umb-googlemaps-reset" class="btn" style="margin-top:10px">{{resetTxt}}</button>
     </div>
 </div>
