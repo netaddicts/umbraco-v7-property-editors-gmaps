@@ -27,20 +27,13 @@
             description: "Enter your default zoom level",
             key: "zoomlevel",
             view: "textstring"
-          },
-          {
-            label: "Reset button",
-            description: "Enter a text for the reset button. Default is: Reset position",
-            key: "resetTxt",
-            view: "textstring"
           }
         ]
       },
       defaultConfig:{
         lat: 51.0441581,
         lng: 3.4609621,
-        zoomlevel: 15,
-        resetTxt: "Reset position"
+        zoomlevel: 15
       }
     } 
   ],

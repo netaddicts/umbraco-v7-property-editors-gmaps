@@ -130,11 +130,15 @@
 
             geocoder.geocode({ 'latLng': latLng }, function (results, status) {
 
+            //Fetches the translations from the view - it's a bit of a hack currently. It's also run each time a change happens
+            var geoCodeError = document.getElementById("geoCodeError").innerText,
+                locationSet = document.getElementById("locationSet").innerText;
+
                 if (status == google.maps.GeocoderStatus.OK) {
                     var location = results[0].formatted_address;
 
                     $rootScope.$apply(function () {
-                        notificationsService.success("Location set to", location);
+                        notificationsService.success(locationSet, location);
                         
                         var newLat = marker.getPosition().lat();
                         var newLng = marker.getPosition().lng();
@@ -143,8 +147,80 @@
                         $scope.formattedAddress = location + ' (' + newLat + "," + newLng + ')';
                     });
                 } else {
-                    notificationsService.error("Oops! Having trouble geocoding specified address! Please try again.");
+                    notificationsService.error(geoCodeError);
                 }
             });
         }
+
+        //Loading the styles
+        assetsService.loadCss("/app_plugins/GMaps/assets/css/gmaps.css");
+
     });
+
+//Translation directive
+angular.module("umbraco.directives").directive('gmapsLocalize', function (gmapsLocalizationService) {
+    var linker = function (scope, element, attrs){
+
+        var key = scope.key;
+        
+        gmapsLocalizationService.localize(key).then(function(value){
+            if(value){
+                element.html(value);
+            }
+        });
+    }   
+
+    return {
+        restrict: "E",
+        rep1ace: true,
+        link: linker,
+        scope: {
+            key: '@'
+        }
+    }
+});
+
+
+//Translation service
+angular.module('umbraco.services').factory('gmapsLocalizationService', function($http, $q, userService){
+    var service = {
+        resourceFileLoaded: false,
+        dictionary: {},
+        localize: function(key) {
+            var deferred = $q.defer();
+
+            if(service.resourceFileLoaded){
+                var value = service._lookup(key);
+                deferred.resolve(value);
+            }
+            else{
+                service.initLocalizedResources().then(function(dictionary){
+                   var value = service._lookup(key);
+                   deferred.resolve(value); 
+                });
+            } 
+
+            return deferred.promise;
+        },
+        _lookup: function(key){
+            return service.dictionary[key];
+        },
+        initLocalizedResources:function () {
+            var deferred = $q.defer();
+            userService.getCurrentUser().then(function(user){
+                $http.get("/App_plugins/GMaps/langs/" + user.locale + ".js") 
+                    .then(function(response){
+                        service.resourceFileLoaded = true;
+                        service.dictionary = response.data;
+
+                        return deferred.resolve(service.dictionary);
+                    }, function(err){
+                        return deferred.reject("Lang file missing");
+                    });
+            });
+            return deferred.promise;
+        }
+    }
+
+    return service;
+});

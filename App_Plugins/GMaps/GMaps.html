@@ -1,14 +1,26 @@
 ﻿<div ng-controller="GMaps.GoogleMapsController" class="umb-editor umb-googlemaps test">
+
+    <!-- This is a bit dirty but currently the only way I know how to translate the text values in the controller -->
+    <span id="geoCodeError" class="hide">
+        <gmaps-localize key="geoCodeError">Oops! Having trouble geocoding specified address! Please try again.</gmaps-localize>
+    </span>
+    
+    <span id="locationSet" class="hide">
+        <gmaps-localize key="locationSet">Location set to</gmaps-localize>
+    </span>
+
     <div>
         <input type="text" id="{{model.alias}}_lookup" class="umb-editor umb-textstring textstring"/>
     </div>
     <div>
-        <div style="height: 400px;" id="{{model.alias}}_map"></div>
+        <div class="map" id="{{model.alias}}_map"></div>
     </div>
     <div>
         <span>{{formattedAddress}}</span>
     </div>
     <div>
-    	<button type="submit" id="umb-googlemaps-reset" class="btn" style="margin-top:10px">{{resetTxt}}</button>
+    	<button type="submit" id="umb-googlemaps-reset" class="btn">
+            <gmaps-localize key="resetTxt">Reset position</gmaps-localize>
+        </button>
     </div>
 </div>
