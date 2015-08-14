@@ -14,15 +14,39 @@
 
         assetsService.loadJs('//www.google.com/jsapi')
             .then(function () {
-                google.load("maps", "3", { callback: initializeMap, other_params: "sensor=false&libraries=places" });
+                google.load("maps", "3", { callback: initializeInstanceOfMap, other_params: "sensor=false&libraries=places" });
             });
+            
+        function generateID() {
+            var d = new Date().getTime();
+            var id = 'xxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = (d + Math.random() * 16) % 16 | 0;
+                d = Math.floor(d / 16);
+                return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            });
+            return id;
+        };
+        
+        
+        $scope.model.uid = generateID();
+
+        function initializeInstance() {
+            if ($scope.model.uid == "") {
+                // uid not set, wait .1s and try again
+                setTimeout(initializeInstance, 100);
+            }
+            else {
+                initializeMap();
+            }
+            return true;
+        }
 
         function initializeMap() {
             //Getting text for the reset button
             $scope.resetTxt = $scope.model.config.resetTxt;
 
             var location = $scope.model.value,
-                resetBtn = document.getElementById("umb-googlemaps-reset");
+                resetBtn = document.getElementById("umb-googlemaps-reset-" + $scope.model.uid);
 
             if(location != ''){
                 var latLngArray = location.split(',');
@@ -33,7 +57,7 @@
                 mapCenter = new google.maps.LatLng(defaultLat, defaultLng);
             }
 
-            var mapElement = document.getElementById($scope.model.alias + '_map');
+            var mapElement = document.getElementById($scope.model.alias + '_' + $scope.model.uid + '_map');
             var mapOptions = { zoom: defaultZoomLvl, center: mapCenter, mapTypeId: google.maps.MapTypeId.ROADMAP };
 
             geocoder = new google.maps.Geocoder();
@@ -53,7 +77,7 @@
                 addMarkerDragEndListener();
             }
 
-            var lookupInputElement = document.getElementById($scope.model.alias + '_lookup');
+            var lookupInputElement = document.getElementById($scope.model.alias + '_' + $scope.model.uid + '_lookup');
             var options = {};
 
             place = new google.maps.places.Autocomplete(lookupInputElement, options);
@@ -73,7 +97,7 @@
         function resetMap () {
             
             mapCenter = new google.maps.LatLng(defaultLat, defaultLng);
-            mapElement = document.getElementById($scope.model.alias + '_map');
+            mapElement = document.getElementById($scope.model.alias + '_' + $scope.model.uid + '_map');
             mapOptions = { zoom: defaultZoomLvl, center: mapCenter, mapTypeId: google.maps.MapTypeId.ROADMAP };
             map = new google.maps.Map(mapElement, mapOptions);
 
