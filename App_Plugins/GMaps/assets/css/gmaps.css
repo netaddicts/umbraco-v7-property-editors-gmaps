@@ -9,3 +9,8 @@
 .hide{
 	display: none;
 }
+
+.pac-container {
+	/* beat the standard 1000 z-index, to make it work in modals */
+	z-index: 1100 !important;
+}
