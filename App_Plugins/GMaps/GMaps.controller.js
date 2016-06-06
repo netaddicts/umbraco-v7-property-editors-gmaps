@@ -30,7 +30,7 @@
         
         $scope.model.uid = generateID();
 
-        function initializeInstance() {
+        function initializeInstanceOfMap() {
             if ($scope.model.uid == "") {
                 // uid not set, wait .1s and try again
                 setTimeout(initializeInstance, 100);
