@@ -1,4 +1,4 @@
-﻿{
+{
   propertyEditors:
   [ 
     {
@@ -7,9 +7,16 @@
       editor:  
       {
         view: "~/App_Plugins/GMaps/GMaps.html"
+        
       },
       prevalues: {
         fields:[
+          {
+            label: "API Key",
+            description: "Enter your google maps API key",
+            key: "key",
+            view: "textstring"
+          },
           {
             label: "Latitude",
             description: "Enter your default starting latitude",

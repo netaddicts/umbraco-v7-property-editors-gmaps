@@ -1,4 +1,4 @@
-﻿angular.module("umbraco").controller("GMaps.GoogleMapsController",
+angular.module("umbraco").controller("GMaps.GoogleMapsController",
     function ($rootScope, $scope, notificationsService, dialogService, assetsService) {
 
         var map,
@@ -10,11 +10,12 @@
             //Getting prevalues
             defaultLat = $scope.model.config.lat,
             defaultLng = $scope.model.config.lng,
-            defaultZoomLvl = parseInt($scope.model.config.zoomlevel);
+            defaultZoomLvl = parseInt($scope.model.config.zoomlevel),
+            key = $scope.model.config.key;
 
         assetsService.loadJs('//www.google.com/jsapi')
             .then(function () {
-                google.load("maps", "3", { callback: initializeMap, other_params: "sensor=false&libraries=places" });
+                google.load("maps", "3", { callback: initializeMap, other_params: "key="+key+"&sensor=false&libraries=places" });
             });
 
         function initializeMap() {
@@ -41,7 +42,7 @@
 
             if (location != '') {
                 var latLngArray = location.split(',');
-                
+
                 marker = new google.maps.Marker({
                     map: map,
                     position: new google.maps.LatLng(latLngArray[0], latLngArray[1]),
@@ -71,7 +72,7 @@
         }
 
         function resetMap () {
-            
+
             mapCenter = new google.maps.LatLng(defaultLat, defaultLng);
             mapElement = document.getElementById($scope.model.alias + '_map');
             mapOptions = { zoom: defaultZoomLvl, center: mapCenter, mapTypeId: google.maps.MapTypeId.ROADMAP };
@@ -145,7 +146,7 @@
 
                     $rootScope.$apply(function () {
                         notificationsService.success(locationSet, location);
-                        
+
                         var newLat = marker.getPosition().lat();
                         var newLng = marker.getPosition().lng();
 
@@ -168,13 +169,13 @@ angular.module("umbraco.directives").directive('gmapsLocalize', function (gmapsL
     var linker = function (scope, element, attrs){
 
         var key = scope.key;
-        
+
         gmapsLocalizationService.localize(key).then(function(value){
             if(value){
                 element.html(value);
             }
         });
-    }   
+    }
 
     return {
         restrict: "E",
@@ -202,9 +203,9 @@ angular.module('umbraco.services').factory('gmapsLocalizationService', function(
             else{
                 service.initLocalizedResources().then(function(dictionary){
                    var value = service._lookup(key);
-                   deferred.resolve(value); 
+                   deferred.resolve(value);
                 });
-            } 
+            }
 
             return deferred.promise;
         },
@@ -214,7 +215,7 @@ angular.module('umbraco.services').factory('gmapsLocalizationService', function(
         initLocalizedResources:function () {
             var deferred = $q.defer();
             userService.getCurrentUser().then(function(user){
-                $http.get("/App_plugins/GMaps/langs/" + user.locale + ".js") 
+                $http.get("/App_plugins/GMaps/langs/" + user.locale + ".js")
                     .then(function(response){
                         service.resourceFileLoaded = true;
                         service.dictionary = response.data;
