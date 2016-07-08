@@ -11,7 +11,7 @@ build_script:
   - Package.build.cmd
 
 artifacts:
-  - path: Releases\*.nupkg
+  - path: Releases\*.*
   
 deploy:
   provider: NuGet
