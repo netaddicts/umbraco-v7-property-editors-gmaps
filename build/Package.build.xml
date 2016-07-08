@@ -110,9 +110,9 @@
     	<Copy SourceFiles="@(BinFiles)" DestinationFiles="@(BinFiles->'$(BuildUmbDir)\bin\%(RecursiveDir)%(Filename)%(Extension)')" />
 	<Copy SourceFiles="@(NugetReadmeFile)" DestinationFolder="$(BuildNuGetDir)\" />
 	
-	<Copy SourceFiles="@(RootFiles)" DestinationFolder="$(BuildNuGetDir)\Content\App_Plugins\" />
+	<Copy SourceFiles="@(RootFiles)" DestinationFolder="$(BuildNuGetDir)\Content\App_Plugins\GMaps\" />
 	<Copy SourceFiles="@(LangFiles)" DestinationFolder="$(BuildNuGetDir)\Content\App_Plugins\GMaps\langs\" />
-	<Copy SourceFiles="@(CSSFiles)" DestinationFolder="$(BuildNuGetDir)\Content\App_Plugins\assets\css\" />
+	<Copy SourceFiles="@(CSSFiles)" DestinationFolder="$(BuildNuGetDir)\Content\App_Plugins\GMaps\assets\css\" />
     <Copy SourceFiles="@(BinFiles)"
     DestinationFiles="@(BinFiles->'$(BuildNuGetDir)\lib\%(RecursiveDir)%(Filename)%(Extension)')" />
 	
