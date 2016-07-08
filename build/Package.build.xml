@@ -32,7 +32,7 @@
 		<Copyright>netaddicts, BatJan, ninjaonsafari, kipusoep, Tim Geyssens</Copyright>
 		<Owners>Tim Geyssens</Owners>
 		<Summary>Google Maps Property Editor</Summary>
-		<IconUrl>https://raw.githubusercontent.com/TimGeyssens/LookWhosEditingToo/master/logo.png</IconUrl>
+		<IconUrl>https://raw.githubusercontent.com/netaddicts/umbraco-v7-property-editors-gmaps/master/logo.png</IconUrl>
 		<Tags>umbraco</Tags>
 		<Language>en-GB</Language>
 		<RequireLicenseAcceptance>false</RequireLicenseAcceptance>
