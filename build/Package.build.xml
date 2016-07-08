@@ -27,7 +27,7 @@
 
 	<!-- NUGET ONLY PROPERTIES -->
 	<PropertyGroup>
-		<NugetPackageName>Googlemaps Property Editor</NugetPackageName>
+		<NugetPackageName>Umbraco Googlemaps Property Editor</NugetPackageName>
 		<PackageId>umbraco-v7-property-editors-gmaps</PackageId>
 		<Copyright>netaddicts, BatJan, ninjaonsafari, kipusoep, Tim Geyssens</Copyright>
 		<Owners>Tim Geyssens</Owners>
