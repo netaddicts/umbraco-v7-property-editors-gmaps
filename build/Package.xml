@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<umbPackage>
+	<info>
+		<package>
+			<name>GMaps</name>
+			<version>0.0.0</version>
+			<license url="http://www.opensource.org/licenses/mit-license.php">MIT license</license>
+			<url>http://nibble.be</url>
+			<requirements>
+				<major>7</major>
+				<minor>0</minor>
+				<patch>0</patch>
+			</requirements>
+		</package>
+		<author>
+			<name>Tim Geyssens</name>
+			<website>http://nibble.be</website>
+		</author>
+        <readme>
+          <![CDATA[Googlemaps property editor]]>
+        </readme>
+	</info>
+
+	<DocumentTypes />
+	<Templates />
+	<Stylesheets />
+	<Macros />
+	<DictionaryItems />
+	<Languages />
+	<DataTypes />
+    <Actions />
+	<control />
+	<files />
+
+</umbPackage>
