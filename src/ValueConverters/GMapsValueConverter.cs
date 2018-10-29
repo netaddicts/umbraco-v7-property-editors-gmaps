@@ -33,12 +33,20 @@ namespace umbraco_v7_property_editors_gmaps.ValueConverters
             }
 
             string[] coordinates = source.ToString().Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-
-            return new GMapsLocation
+            
+            decimal lat, lng;
+            if (coordinates.Length == 2 &&
+                decimal.TryParse(coordinates[0], NumberStyles.Number, CultureInfo.InvariantCulture, out lat) && 
+                decimal.TryParse(coordinates[1], NumberStyles.Number, CultureInfo.InvariantCulture, out lng))
             {
-                Latitude = decimal.Parse(coordinates[0], CultureInfo.InvariantCulture),
-                Longitude = decimal.Parse(coordinates[1], CultureInfo.InvariantCulture)
-            };
+                return new GMapsLocation
+                {
+                    Latitude = lat,
+                    Longitude = lng
+                };
+            }
+
+            return null;
         }
     }
 }
